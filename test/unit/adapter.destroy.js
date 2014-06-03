@@ -48,13 +48,13 @@ describe('adapter `.destroy()`', function() {
     });
 
     it('should delete a record', function(done) {
-      Adapter.destroy('destroy', { id: model.id }, function(err, status) {
+      Adapter.destroy('destroy', { id: model.id }, function(err) {
         if(err) throw err;
 
         Adapter.find('destroy', { id: model.id }, function(err, models) {
-          assert(err);
-          assert(err.message === Errors.notFound.message);
-          assert(!models);
+          if (err) throw err;
+
+          assert(models.length === 0);
           done();
         });
       });
@@ -62,7 +62,7 @@ describe('adapter `.destroy()`', function() {
   });
 
   describe('with multiple records', function() {
-    before(function(done) {
+    beforeEach(function(done) {
       var i, len;
 
       var definition = {
@@ -94,12 +94,12 @@ describe('adapter `.destroy()`', function() {
       });
     });
 
-    after(function(done) {
+    afterEach(function(done) {
       Support.Teardown('destroy', done);
     });
 
     it('should delete all records', function(done) {
-      Adapter.destroy('destroy', { name: { startsWith: 'User' } }, function(err, status) {
+      Adapter.destroy('destroy', { name: { startsWith: 'User' } }, function(err) {
         if(err) throw err;
 
         Adapter.find('destroy', {}, function(err, models) {
@@ -107,6 +107,21 @@ describe('adapter `.destroy()`', function() {
 
           assert(!models.length);
           done();
+        });
+      });
+    });
+
+    describe('when no criteria is specified', function () {
+      it('should delete all records', function (done) {
+        Adapter.destroy('destroy', {}, function (err) {
+          if (err) throw err;
+
+          Adapter.find('destroy', {}, function (err, models) {
+            if (err) throw err;
+
+            assert(models.length === 0);
+            done();
+          })
         });
       });
     });
