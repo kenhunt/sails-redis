@@ -1,6 +1,6 @@
 {
   "name": "sails-redis",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Redis adapter for waterline",
   "main": "index.js",
   "author": "vanetix <matmcfarland@gmail.com>",
@@ -20,6 +20,14 @@
     {
       "name": "Carlo DiCelico",
       "email": "carlo@diceli.co"
+    },
+    {
+      "name": "Ken Hunt",
+      "email": "khunt@digium.com"
+    },
+    {
+      "name": "Chad McElligott",
+      "email": "chad.mcelligott@gmail.com"
     }
   ],
   "scripts": {
