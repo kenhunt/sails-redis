@@ -232,6 +232,18 @@ describe('adapter `.find()`', function() {
         done();
       });
     });
+
+    describe("when passed an id of a record that does not exist", function () {
+
+      it("returns an empty array", function (done) {
+        Adapter.find('finders', { where: { id: 9000001 } }, function (err, records) {
+          assert(!err);
+          assert(Array.isArray(records));
+          assert(records.length === 0);
+          done();
+        });
+      });
+    });
   });
 
 });
